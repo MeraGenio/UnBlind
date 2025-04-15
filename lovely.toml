@@ -1,0 +1,69 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]           ##### stop Shop_sign from rendering
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+    local shop_sign = AnimatedSprite(0,0, 4.4, 2.2, G.ANIMATION_ATLAS['shop_sign'])
+    shop_sign:define_draw_steps({
+      {shader = 'dissolve', shadow_height = 0.05},
+      {shader = 'dissolve'}
+    })
+    G.SHOP_SIGN = UIBox{
+      definition = 
+        {n=G.UIT.ROOT, config = {colour = G.C.DYN_UI.MAIN, emboss = 0.05, align = 'cm', r = 0.1, padding = 0.1}, nodes={
+          {n=G.UIT.R, config={align = "cm", padding = 0.1, minw = 4.72, minh = 3.1, colour = G.C.DYN_UI.DARK, r = 0.1}, nodes={
+            {n=G.UIT.R, config={align = "cm"}, nodes={
+              {n=G.UIT.O, config={object = shop_sign}}
+            }},
+            {n=G.UIT.R, config={align = "cm"}, nodes={
+              {n=G.UIT.O, config={object = DynaText({string = {localize('ph_improve_run')}, colours = {lighten(G.C.GOLD, 0.3)},shadow = true, rotate = true, float = true, bump = true, scale = 0.5, spacing = 1, pop_in = 1.5, maxw = 4.3})}}
+            }},
+          }},
+        }},
+      config = {
+        align="cm",
+        offset = {x=0,y=-15},
+        major = G.HUD:get_UIE_by_ID('row_blind'),
+        bond = 'Weak'
+      }
+    }'''
+position = "at"
+payload = '''
+    G.SHOP_SIGN = UIBox{
+      definition = 
+        {n=G.UIT.ROOT, config = {colour = G.C.CLEAR, align = 'bm' }, nodes={
+          G.UIDEF.UnBlind_current_blinds()
+        }},
+      config = {
+        align="cm",
+        offset = {x=0,y=-15},
+        major = G.HUD:get_UIE_by_ID('row_blind'),
+        bond = 'Strong'
+      }
+    }'''
+match_indent = true 
+
+
+
+[[patches]]           ##### stop Shop_sign from rendering
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+'''
+position = "at"
+payload = '''
+'''
+match_indent = true 
+
+
+[[patches]]
+[patches.copy]
+target = "functions/UI_definitions.lua"
+position = "append"
+sources = [
+    "UI_Def append.lua",
+]

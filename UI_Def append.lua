@@ -1,18 +1,3 @@
---[[
-
-HUD background colour
-mix_colours(G.C.BLACK, G.C.L_BLACK, 0.5)
-
-
-
-
-
-
-
-
-
-]]
-
 function G.UIDEF.UnBlind_current_blinds() -- called by the replaced bit of code.	see lovely.toml			♥
 	return {n=G.UIT.ROOT, config={align = "bm", colour = G.C.CLEAR, padding = 0.1}, nodes={
 		{n=G.UIT.R, config={align = "bm", colour = G.C.DYN_UI.BOSS_MAIN , r=1, padding = 0.1, w = 2, emboss = 0.05}, nodes={
@@ -111,7 +96,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 		temp_blind.stop_hover = function() temp_blind.hovering = false; Node.stop_hover(temp_blind); temp_blind.hover_tilt = 0 end
 	end
 
-	local t =				--mix_colours(G.C.BLACK, G.C.L_BLACK, 0.5)		--G.C.DYN_UI.MAIN (red)		--G.C.DYN_UI.DARK (very similar to boss_main)		--black is too close to boss_main			--l_dark is too lightmmmmmmm
+	local t =				--mix_colours(G.C.BLACK, G.C.L_BLACK, 0.5)		--G.C.DYN_UI.MAIN (red)		--G.C.DYN_UI.DARK (very similar to boss_main)		--black is too close to boss_main			--l_dark is too light
 	{n=G.UIT.R, config={align = "cm", colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, outline = 1, outline_colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
 		{n=G.UIT.R, config={align = "cm", padding = 0.09}, nodes={
 			{n=G.UIT.C, config={id = 'blind_extras', align = "cl"}, nodes={

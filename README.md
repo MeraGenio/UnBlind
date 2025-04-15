@@ -1,8 +1,6 @@
 # UnBlind
-Balatro mod: See <b>blinds</b> while shopping <br><br>
-
-
-<img src="https://raw.githubusercontent.com/MeraGenio/UnBlind/refs/heads/main/readme-img.png"><br>
+Balatro mod: See <b>blinds</b> while shopping
+<img src="https://raw.githubusercontent.com/MeraGenio/UnBlind/refs/heads/main/readme-img.png">
 
 ToDo:
 - compile for mac

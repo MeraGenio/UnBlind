@@ -7,8 +7,8 @@ ToDo:
 - compile for linux
 
 # how to install 
+♥ Lovely's [latest release](https://github.com/ethangreen-dev/lovely-injector/releases/), ♥ Steamodded's [latest release](https://github.com/Steamodded/smods/releases)
 1.   Get your hands on Lovely and Steamodded by following the [steamodded install guide](https://github.com/Steamodded/smods/wiki#how-to-install-steamodded).
-   [Lovely's latest release](https://github.com/ethangreen-dev/lovely-injector/releases/), [Steamodded's latest release](https://github.com/Steamodded/smods/releases)
 3.   Download the [latest release of UnBlind](https://github.com/MeraGenio/UnBlind/releases).
 4.   Relocate the contesnts of UnBlind.zip to your mods folder.
 <ul>

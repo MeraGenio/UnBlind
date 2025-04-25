@@ -146,7 +146,22 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	return t
 end
 
+function UnBlind_hex2rgb(hex)
+    hex = hex:gsub("#","")
+    return tonumber("0x"..tonumber(hex:sub(1,2)))/256, tonumber("0x"..tonumber(hex:sub(3,4)))/256, tonumber("0x"..tonumber(hex:sub(5,6)))/256
+end
+
+
 function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition for the blind tooltip popup.	--called in main
+
+	local blind_col_rgb = type(blind_col)=="number" and UnBlind_hex2rgb(blind_col) or type(blind_col)=="table" and blind_col or sendErrorMessage("colour calculations are not going how toy thought they would :/", "UnBlindError")
+	local blind_col_lum = 0.2126*blind_col_rgb[1] + 0.7152*blind_col_rgb[2] + 0.0722*blind_col_rgb[3]
+	local max_lum = 0.65
+
+	if blind_col_lum > max_lum then
+		blind_col = darken(blind_col, 0.2)
+	end
+
 	local blind_text = {}
 
 	local _dollars = blind.dollars
@@ -183,7 +198,7 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 			{n=G.UIT.O, config={object = DynaText({string = loc_name, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, spacing = 2, bump = true, scale = 0.4})}},
 		}},
 		{n=G.UIT.R, config={align = "cm"}, nodes=blind_text},
-		ability_text[1] and {n=G.UIT.R, config={align = "cm", padding = 0.08, colour = mix_colours(blind.boss_colour, G.C.GREY, 0.8), r = 0.1, emboss = 0.05, minw = 2.5}, nodes=ability_text}
+		ability_text[1] and {n=G.UIT.R, config={align = "cm", padding = 0.08, colour = mix_colours(blind_col, G.C.GREY, 0.8), r = 0.1, emboss = 0.05, minw = 2.5}, nodes=ability_text}
 		or nil
 	 }}
 end

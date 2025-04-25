@@ -42,7 +42,7 @@ payload = '''
         align="cm",
         offset = {x=0,y=-15},
         major = G.HUD:get_UIE_by_ID('row_blind'),
-        bond = 'Strong'
+        bond = 'Weak'
       }
     }'''
 match_indent = true 

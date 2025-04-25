@@ -49,13 +49,15 @@ match_indent = true
 
 
 
-[[patches]]           ##### stop Shop_sign from rendering
+[[patches]]           ##### LETS CRYPTID WORK. Will not need if my pull request on cryptid is accepted
 [patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = '''
+target = "functions/misc_functions.lua"
+pattern = '''function localize(args, misc_cat)
+if args and args.vars then
 '''
 position = "at"
-payload = '''
+payload = '''function localize(args, misc_cat)
+if args and args.vars and type(args.vars) == "table" then
 '''
 match_indent = true 
 
@@ -66,4 +68,13 @@ target = "functions/UI_definitions.lua"
 position = "append"
 sources = [
     "UI_Def append.lua",
+]
+
+
+[[patches]]     ######### Test and Debugging tools
+[patches.copy]
+target = "functions/UI_definitions.lua"
+position = "append"
+sources = [
+    "Debugging tools.lua",
 ]

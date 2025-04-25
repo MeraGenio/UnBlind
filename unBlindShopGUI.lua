@@ -10,3 +10,7 @@ if SMODS.Atlas then
         frames = 20
     })
 end
+
+
+-- blind loading from crytid
+-- https://vscode.dev/github/MeraGenio/UnBlind/blob/main/lib/gameset.lua#L1210

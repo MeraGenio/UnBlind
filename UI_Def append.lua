@@ -17,7 +17,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 
 	local blind_choice = {  config = G.P_BLINDS[G.GAME.round_resets.blind_choices[type] ],  }
 
-	blind_choice.animation = AnimatedSprite(0,0, 0.75, 0.75, G.ANIMATION_ATLAS['blind_chips'],  blind_choice.config.pos)
+	blind_choice.animation = AnimatedSprite(0,0, 0.75, 0.75, G.ANIMATION_ATLAS[blind_choice.config.atlas] or G.ANIMATION_ATLAS['blind_chips'],  blind_choice.config.pos)
 	blind_choice.animation:define_draw_steps({   {shader = 'dissolve', shadow_height = 0.05},  {shader = 'dissolve'}  })
 	local temp_blind = blind_choice.animation
 	local extras = nil

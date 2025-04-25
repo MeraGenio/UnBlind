@@ -8,7 +8,7 @@ function G.UIDEF.UnBlind_current_blinds() -- called by the replaced bit of code.
 			G.GAME.round_resets.blind_states['Boss'] ~= 'Hide' and
 			UnBlind_create_UIBox_blind('Boss') or nil
 		}}
-	}}   
+	}}
 end
 
 function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of the shop_sign replacement
@@ -51,7 +51,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	local loc_target = localize{type = 'raw_descriptions', key = blind_choice.config.key, set = 'Blind', vars = {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}}
 	local loc_name = localize{type = 'name_text', key = blind_choice.config.key, set = 'Blind'}
 	local text_table = loc_target
-	local blind_col = get_blind_main_colour(type)
+	local blind_col = get_blind_main_colour(G.GAME.round_resets.blind_choices[type])
 	local blind_amt = get_blind_amount(G.GAME.round_resets.blind_ante)*blind_choice.config.mult*G.GAME.starting_params.ante_scaling
 
 	local blind_state = G.GAME.round_resets.blind_states[type]
@@ -114,15 +114,15 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 			{n=G.UIT.C, config={align = "cl", padding = 0.05 }, nodes={
 				--select blind "button" (defeated or upcoming)
 				{n=G.UIT.C, config={
-					id = 'select_blind_button', 
-					align = "cm", 
-					ref_table = blind_choice.config, 
-					colour = run_info_colour, 
-					minh = 0.75, 
-					minw = 0.3, 
-					padding = 0.0, 
-					r = 3, 
-					emboss = 0.08, 
+					id = 'select_blind_button',
+					align = "cm",
+					ref_table = blind_choice.config,
+					colour = run_info_colour,
+					minh = 0.75,
+					minw = 0.3,
+					padding = 0.0,
+					r = 3,
+					emboss = 0.08,
 				},
 				nodes={
 					--min score

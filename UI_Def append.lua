@@ -188,7 +188,7 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 				}},
 				{n=G.UIT.R, config={align = "cm"}, nodes={			-- text for chips required to win blind
 					{n=G.UIT.O, config={object = stake_sprite}},
-					{n=G.UIT.T, config={text = number_format(blind_amt), scale = score_number_scale(0.9, blind_amt), colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.RED, shadow =  not disabled}},
+					{n=G.UIT.O, config={object = DynaText({string = vars, scale = 0.52, colour = G.C.RED})}}
 				}},
 				{n=G.UIT.R, config={align = "cm"}, nodes={
 					{n=G.UIT.T, config={text = localize('ph_blind_reward'), scale = 0.35, colour = G.C.UI.TEXT_DARK}},

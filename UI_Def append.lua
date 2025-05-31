@@ -173,22 +173,23 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col)
 		{n=G.UIT.R, config={align = "cm", colour = G.C.CLEAR}, nodes={
 			{n=G.UIT.R, config={align = "cm", emboss = 0.05, r = 0.1, minw = 2.5, padding = 0.07, colour = G.C.WHITE}, nodes={
 				{n=G.UIT.R, config={align = "cm", maxw = 2.4}, nodes={
-					{n=G.UIT.T, config={text = localize('ph_blind_score_at_least'), scale = 0.35, colour = G.C.UI.TEXT_DARK}},
+					{n=G.UIT.T, config={text = localize('ph_blind_score_at_least'), scale = 0.35, colour = G.C.UI.TEXT_DARK}}
 				}},
 				{n=G.UIT.R, config={align = "cm"}, nodes={
 					{n=G.UIT.O, config={object = stake_sprite}},
-					{n=G.UIT.T, config={text = number_format(blind_amt), scale = score_number_scale(0.9, blind_amt), colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.RED, shadow =  not disabled}},
+		--			{n=G.UIT.T, config={text = number_format(blind_amt), scale = score_number_scale(0.9, blind_amt), colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.RED, shadow =  not disabled}}
+					{n=G.UIT.O, config={object = DynaText({string = vars, scale = 0.52, colour = G.C.RED})}}
 				}},
 				{n=G.UIT.R, config={align = "cm"}, nodes={
 					{n=G.UIT.T, config={text = localize('ph_blind_reward'), scale = 0.35, colour = G.C.UI.TEXT_DARK}},
-					{n=G.UIT.O, config={object = DynaText({string = {_dollars and string.rep(localize('$'),_dollars) or '-'}, colours = {G.C.MONEY}, rotate = true, bump = true, silent = true, scale = 0.45})}},
+					{n=G.UIT.O, config={object = DynaText({string = {_dollars and string.rep(localize('$'),_dollars) or '-'}, colours = {G.C.MONEY}, rotate = true, bump = true, silent = true, scale = 0.45})}}
 				}},
 			}},
 		}}
 	return
 	 {n=G.UIT.ROOT, config={align = "cm", padding = 0.1, colour = G.C.BLACK, r = 0.1, emboss = 0.05, outline_colour = G.C.WHITE, outline = 1}, nodes={
 		{n=G.UIT.R, config={align = "cm", emboss = 0.05, r = 0.1, minw = 2.5, padding = 0.1, colour = blind_col}, nodes={
-			{n=G.UIT.O, config={object = DynaText({string = loc_name, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, spacing = 2, bump = true, scale = 0.4})}},
+			{n=G.UIT.O, config={object = DynaText({string = loc_name, colours = {G.C.UI.TEXT_LIGHT}, shadow = true, spacing = 2, bump = true, scale = 0.4})}}
 		}},
 		{n=G.UIT.R, config={align = "cm"}, nodes=blind_text},
 		ability_text[1] and {n=G.UIT.R, config={align = "cm", padding = 0.08, colour = mix_colours(blind_col, G.C.GREY, 0.8), r = 0.1, emboss = 0.05, minw = 2.5}, nodes=ability_text}

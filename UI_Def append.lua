@@ -15,7 +15,9 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	local run_info = true
 	local disabled = false
 
-	local blind_choice = {  config = G.P_BLINDS[G.GAME.round_resets.blind_choices[type] ],  }
+	local blind_choice = {  config = G.P_BLINDS[G.GAME.round_resets.blind_choices[type]] }
+	-- how im sending bs to the lovely consol when i gotta (I keep forgetting how i did it)
+	-- local g = sendDebugMessage(DataDumper(blind_choice), "UNBLIND ◙◙◙◙◙◙◙◙◙◙")
 
 	blind_choice.animation = AnimatedSprite(0,0, 0.75, 0.75, G.ANIMATION_ATLAS[blind_choice.config.atlas] or G.ANIMATION_ATLAS['blind_chips'],  blind_choice.config.pos)
 	blind_choice.animation:define_draw_steps({   {shader = 'dissolve', shadow_height = 0.05},  {shader = 'dissolve'}  })
@@ -72,7 +74,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	temp_blind.states.drag.can = false
 	temp_blind.states.collide.can = true
 	temp_blind.config = {blind = v, force_focus = true}
-	if discovered and not v.alerted then 
+	if discovered and not v.alerted then
 		blinds_to_be_alerted[#blinds_to_be_alerted+1] = temp_blind
 	end
 	temp_blind.hover = function()
@@ -154,7 +156,7 @@ end
 
 function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition for the blind tooltip popup.	--called in main
 
-	local blind_col_rgb = type(blind_col)=="number" and UnBlind_hex2rgb(blind_col) or type(blind_col)=="table" and blind_col or sendErrorMessage("colour calculations are not going how toy thought they would :/", "UnBlindError")
+	local blind_col_rgb = type(blind_col)=="number" and UnBlind_hex2rgb(blind_col) or type(blind_col)=="table" and blind_col or sendErrorMessage("colour calculations are not going how I thought they would :/", "UnBlindError")
 	local blind_col_lum = 0.2126*blind_col_rgb[1] + 0.7152*blind_col_rgb[2] + 0.0722*blind_col_rgb[3]
 	local max_lum = 0.65
 
@@ -165,13 +167,15 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 	local blind_text = {}
 
 	local _dollars = blind.dollars
-	local loc_target = localize{type = 'raw_descriptions', key = blind.key, set = 'Blind', vars = vars or blind.vars}
+	local loc_target = localize{type = 'raw_descriptions', key = blind.key, set = 'Blind', vars = {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}}
+	-- get hands on the most_played_poker_hand. doesnt work with other mods yet. WOMP WOMP -s
 	local loc_name = localize{type = 'name_text', key = blind.key, set = 'Blind'}
 
 
 	 local ability_text = {}
-	 if loc_target then 
+	 if loc_target then
 		for k, v in ipairs(loc_target) do
+			--sendDebugMessage("k: "..k.." v: "..v, "unblind◙◙◙")
 			ability_text[#ability_text + 1] = {n=G.UIT.R, config={align = "cm"}, nodes={{n=G.UIT.T, config={text = (k ==1 and blind.name == 'The Wheel' and '1' or '')..v, scale = 0.35, shadow = true, colour = G.C.WHITE}}}}
 		end
 	 end
@@ -182,9 +186,9 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 				{n=G.UIT.R, config={align = "cm", maxw = 2.4}, nodes={
 					{n=G.UIT.T, config={text = localize('ph_blind_score_at_least'), scale = 0.35, colour = G.C.UI.TEXT_DARK}},
 				}},
-				{n=G.UIT.R, config={align = "cm"}, nodes={			-- 
+				{n=G.UIT.R, config={align = "cm"}, nodes={			-- text for chips required to win blind
 					{n=G.UIT.O, config={object = stake_sprite}},
-					{n=G.UIT.O, config={object = DynaText({string = vars, scale = 0.52, colour = G.C.RED})}},
+					{n=G.UIT.T, config={text = number_format(blind_amt), scale = score_number_scale(0.9, blind_amt), colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.RED, shadow =  not disabled}},
 				}},
 				{n=G.UIT.R, config={align = "cm"}, nodes={
 					{n=G.UIT.T, config={text = localize('ph_blind_reward'), scale = 0.35, colour = G.C.UI.TEXT_DARK}},

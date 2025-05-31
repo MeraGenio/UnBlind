@@ -1,9 +1,8 @@
 [manifest]
-version = "1.0.0"
-dump_lua = true
+version = "1.2.1"
 priority = 0
 
-[[patches]]           ##### stop Shop_sign from rendering
+[[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = '''
@@ -49,7 +48,7 @@ match_indent = true
 
 
 
-[[patches]]           ##### LETS CRYPTID WORK. Will not need if my pull request on cryptid is accepted
+[[patches]]
 [patches.pattern]
 target = "functions/misc_functions.lua"
 pattern = '''function localize(args, misc_cat)
@@ -68,13 +67,4 @@ target = "functions/UI_definitions.lua"
 position = "append"
 sources = [
     "UI_Def append.lua",
-]
-
-
-[[patches]]     ######### Test and Debugging tools
-[patches.copy]
-target = "functions/UI_definitions.lua"
-position = "append"
-sources = [
-    "Debugging tools.lua",
 ]

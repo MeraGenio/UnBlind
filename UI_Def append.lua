@@ -1,4 +1,6 @@
-function G.UIDEF.UnBlind_current_blinds() -- called by the replaced bit of code.	see lovely.toml			♥
+-- all comments removed from releases
+
+function G.UIDEF.UnBlind_current_blinds()
 	return {n=G.UIT.ROOT, config={align = "bm", colour = G.C.CLEAR, padding = 0.1}, nodes={
 		{n=G.UIT.R, config={align = "bm", colour = G.C.DYN_UI.BOSS_MAIN , r=1, padding = 0.1, w = 2, emboss = 0.05}, nodes={
 			G.GAME.round_resets.blind_states['Small'] ~= 'Hide' and
@@ -11,13 +13,11 @@ function G.UIDEF.UnBlind_current_blinds() -- called by the replaced bit of code.
 	}}
 end
 
-function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of the shop_sign replacement
+function UnBlind_create_UIBox_blind(type)
 	local run_info = true
 	local disabled = false
 
 	local blind_choice = {  config = G.P_BLINDS[G.GAME.round_resets.blind_choices[type]] }
-	-- how im sending bs to the lovely consol when i gotta (I keep forgetting how i did it)
-	-- local g = sendDebugMessage(DataDumper(blind_choice), "UNBLIND ◙◙◙◙◙◙◙◙◙◙")
 
 	blind_choice.animation = AnimatedSprite(0,0, 0.75, 0.75, G.ANIMATION_ATLAS[blind_choice.config.atlas] or G.ANIMATION_ATLAS['blind_chips'],  blind_choice.config.pos)
 	blind_choice.animation:define_draw_steps({   {shader = 'dissolve', shadow_height = 0.05},  {shader = 'dissolve'}  })
@@ -64,7 +64,6 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	local run_info_colour = run_info and (blind_state == 'Defeated' and G.C.GREY or blind_state == 'Skipped' and mix_colours(G.C.BLUE, G.C.GREY, 0.5) or blind_state == 'Upcoming' and G.C.ORANGE or G.C.GOLD)
 	local blind_state_text_colour =  (blind_state == 'Defeated' and G.C.UI.BACKGROUND_LIGHT or   blind_state == 'Skipped' and G.C.UI.BACKGROUND_LIGHT or blind_state == 'Upcoming' and G.C.WHITE or G.C.GOLD)
 
-	-- blind tag animatiopn bs
 	local discovered = true
 	local blinds_to_be_alerted = {}
 	local v = blind_choice
@@ -98,23 +97,18 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 		temp_blind.stop_hover = function() temp_blind.hovering = false; Node.stop_hover(temp_blind); temp_blind.hover_tilt = 0 end
 	end
 
-	local t =				--mix_colours(G.C.BLACK, G.C.L_BLACK, 0.5)		--G.C.DYN_UI.MAIN (red)		--G.C.DYN_UI.DARK (very similar to boss_main)		--black is too close to boss_main			--l_dark is too light
+	local t =
 	{n=G.UIT.R, config={align = "cm", colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, outline = 1, outline_colour = G.C.DYN_UI.BOSS_MAIN}, nodes={
 		{n=G.UIT.R, config={align = "cm", padding = 0.09}, nodes={
 			{n=G.UIT.C, config={id = 'blind_extras', align = "cl"}, nodes={
 				extras,
 			}},
-			--blind tag and desc container
 			{n=G.UIT.C, config={align = "cl", padding = 0}, nodes={
 				{n=G.UIT.C, config={id = 'blind_desc', align = "cm", padding = 0.05 }, nodes={
-					--blind tag pos + boss desc
-					--BLIND CHIP animation here btw ♥
 					{n=G.UIT.O, config={object = blind_choice.animation, focus_with_object = true}},
 				}},
 			}},
-			--select blind container
 			{n=G.UIT.C, config={align = "cl", padding = 0.05 }, nodes={
-				--select blind "button" (defeated or upcoming)
 				{n=G.UIT.C, config={
 					id = 'select_blind_button',
 					align = "cm",
@@ -127,14 +121,11 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 					emboss = 0.08,
 				},
 				nodes={
-					--min score
 					{n=G.UIT.R, config={align = "cm", minw = 2.5}, nodes={
-						--"reward: $$$$+"
 						_reward and {n=G.UIT.C, config={align = "cm"}, nodes={
 							{n=G.UIT.T, config={text = string.rep(localize("$"), blind_choice.config.dollars)..'+', scale = 0.32, colour = disabled and G.C.UI.TEXT_INACTIVE or blind_state_text_colour, shadow = not disabled}}
 						}} or nil,
 						{n=G.UIT.B, config={ w=0.1, h=0.1 }},
-						--"☻ 1,350"
 						{n=G.UIT.C, config={align = "cm", minh = 0.4}, nodes={
 							{n=G.UIT.O, config={w=0.3,h=0.3, colour = G.C.BLUE, object = stake_sprite, hover = true, can_collide = false}},
 							{n=G.UIT.B, config={h=0.1,w=0.05}},
@@ -154,7 +145,7 @@ function UnBlind_hex2rgb(hex)
 end
 
 
-function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition for the blind tooltip popup.	--called in main
+function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col)
 
 	local blind_col_rgb = type(blind_col)=="number" and UnBlind_hex2rgb(blind_col) or type(blind_col)=="table" and blind_col or sendErrorMessage("colour calculations are not going how I thought they would :/", "UnBlindError")
 	local blind_col_lum = 0.2126*blind_col_rgb[1] + 0.7152*blind_col_rgb[2] + 0.0722*blind_col_rgb[3]
@@ -168,14 +159,12 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 
 	local _dollars = blind.dollars
 	local loc_target = localize{type = 'raw_descriptions', key = blind.key, set = 'Blind', vars = {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}}
-	-- get hands on the most_played_poker_hand. doesnt work with other mods yet. WOMP WOMP -s
 	local loc_name = localize{type = 'name_text', key = blind.key, set = 'Blind'}
 
 
 	 local ability_text = {}
 	 if loc_target then
 		for k, v in ipairs(loc_target) do
-			--sendDebugMessage("k: "..k.." v: "..v, "unblind◙◙◙")
 			ability_text[#ability_text + 1] = {n=G.UIT.R, config={align = "cm"}, nodes={{n=G.UIT.T, config={text = (k ==1 and blind.name == 'The Wheel' and '1' or '')..v, scale = 0.35, shadow = true, colour = G.C.WHITE}}}}
 		end
 	 end
@@ -186,7 +175,7 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 				{n=G.UIT.R, config={align = "cm", maxw = 2.4}, nodes={
 					{n=G.UIT.T, config={text = localize('ph_blind_score_at_least'), scale = 0.35, colour = G.C.UI.TEXT_DARK}},
 				}},
-				{n=G.UIT.R, config={align = "cm"}, nodes={			-- text for chips required to win blind
+				{n=G.UIT.R, config={align = "cm"}, nodes={
 					{n=G.UIT.O, config={object = stake_sprite}},
 					{n=G.UIT.T, config={text = number_format(blind_amt), scale = score_number_scale(0.9, blind_amt), colour = disabled and G.C.UI.TEXT_INACTIVE or G.C.RED, shadow =  not disabled}},
 				}},
@@ -207,7 +196,7 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 	 }}
 end
 
-function UnBlind_create_UIBox_blind_tag(blind_choice) --Renders the tag that's availavle if the blind is skipped_rank	--called in main
+function UnBlind_create_UIBox_blind_tag(blind_choice)
 	G.GAME.round_resets.blind_tags = G.GAME.round_resets.blind_tags or {}
 	if not G.GAME.round_resets.blind_tags[blind_choice] then return nil end
 	local _tag = Tag(G.GAME.round_resets.blind_tags[blind_choice], nil, blind_choice)

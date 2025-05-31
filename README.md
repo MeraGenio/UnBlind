@@ -3,7 +3,7 @@ Balatro mod: See <b>blinds</b> while shopping
 <img src="https://raw.githubusercontent.com/MeraGenio/UnBlind/refs/heads/main/readme-img.png">
 
 ToDo:
-- make it work with content mods. When? idk, I burnt myself out :(
+- make sure it works with other content mods. Cryptid tested ✓
 
 # how to install 
 ♥ Lovely's [latest release](https://github.com/ethangreen-dev/lovely-injector/releases/), ♥ Steamodded's [latest release](https://github.com/Steamodded/smods/releases)

@@ -49,19 +49,6 @@ match_indent = true
 
 
 
-[[patches]]           ##### LETS CRYPTID WORK. Will not need if my pull request on cryptid is accepted
-[patches.pattern]
-target = "functions/misc_functions.lua"
-pattern = '''function localize(args, misc_cat)
-if args and args.vars then
-'''
-position = "at"
-payload = '''function localize(args, misc_cat)
-if args and args.vars and type(args.vars) == "table" then
-'''
-match_indent = true 
-
-
 [[patches]]
 [patches.copy]
 target = "functions/UI_definitions.lua"

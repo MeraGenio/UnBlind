@@ -11,6 +11,17 @@ function G.UIDEF.UnBlind_current_blinds() -- called by the replaced bit of code.
 	}}
 end
 
+-- Helper function to get the correct vars for a blind's localization
+-- This matches the logic from blind.lua:set_text() to handle dynamic boss vars
+local function UnBlind_get_blind_vars(blind_config)
+	if blind_config.name == 'The Ox' then
+		return {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}
+	elseif blind_config.name == 'The Wheel' then
+		return {G.GAME.probabilities.normal or 1, 7}
+	end
+	return blind_config.vars or {}
+end
+
 function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of the shop_sign replacement
 	local run_info = true
 	local disabled = false
@@ -37,9 +48,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	G.GAME.orbital_choices[G.GAME.round_resets.ante][type] = pseudorandom_element(_poker_hands, pseudoseed('orbital'))
 	end
 
-	if type == 'Small' then
-		extras = UnBlind_create_UIBox_blind_tag(type)
-	elseif type == 'Big' then
+	if type == 'Small' or type == 'Big' then
 		extras = UnBlind_create_UIBox_blind_tag(type)
 	else
 		extras = {n=G.UIT.R, config={id = 'tag_container', align = "cm"}, nodes={
@@ -50,9 +59,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	end
 
 	G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
-	local loc_target = localize{type = 'raw_descriptions', key = blind_choice.config.key, set = 'Blind', vars = {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}}
 	local loc_name = localize{type = 'name_text', key = blind_choice.config.key, set = 'Blind'}
-	local text_table = loc_target
 	local blind_col = get_blind_main_colour(G.GAME.round_resets.blind_choices[type])
 	local blind_amt = get_blind_amount(G.GAME.round_resets.blind_ante)*blind_choice.config.mult*G.GAME.starting_params.ante_scaling
 
@@ -60,7 +67,9 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	local _reward = true
 
 	if G.GAME.modifiers.no_blind_reward and G.GAME.modifiers.no_blind_reward[type] then _reward = nil end
-	if blind_state == 'Select' then blind_state = 'Current' end
+	if blind_state == 'Select' then
+		blind_state = 'Current'
+	end
 	local run_info_colour = run_info and (blind_state == 'Defeated' and G.C.GREY or blind_state == 'Skipped' and mix_colours(G.C.BLUE, G.C.GREY, 0.5) or blind_state == 'Upcoming' and G.C.ORANGE or G.C.GOLD)
 	local blind_state_text_colour =  (blind_state == 'Defeated' and G.C.UI.BACKGROUND_LIGHT or   blind_state == 'Skipped' and G.C.UI.BACKGROUND_LIGHT or blind_state == 'Upcoming' and G.C.WHITE or G.C.GOLD)
 
@@ -167,18 +176,27 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 	local blind_text = {}
 
 	local _dollars = blind.dollars
-	local loc_target = localize{type = 'raw_descriptions', key = blind.key, set = 'Blind', vars = {localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}}
-	-- get hands on the most_played_poker_hand. doesnt work with other mods yet. WOMP WOMP -s
+
+	-- Build target table (new SMODS pattern)
+	local target = {type = 'raw_descriptions', key = blind.key, set = 'Blind', vars = UnBlind_get_blind_vars(blind)}
+	if blind.collection_loc_vars and type(blind.collection_loc_vars) == 'function' then
+		local res = blind:collection_loc_vars() or {}
+		target.vars = res.vars or target.vars
+		target.key = res.key or target.key
+		target.set = res.set or target.set
+		target.scale = res.scale
+		target.text_colour = res.text_colour
+	end
+	local set_tbl = G.localization.descriptions[target.set]
+	local loc_target = set_tbl and set_tbl[target.key] and set_tbl[target.key].text_parsed
 	local loc_name = localize{type = 'name_text', key = blind.key, set = 'Blind'}
 
-
-	 local ability_text = {}
-	 if loc_target then
+	local ability_text = {}
+	if loc_target then
 		for k, v in ipairs(loc_target) do
-			--sendDebugMessage("k: "..k.." v: "..v, "unblind◙◙◙")
-			ability_text[#ability_text + 1] = {n=G.UIT.R, config={align = "cm"}, nodes={{n=G.UIT.T, config={text = (k ==1 and blind.name == 'The Wheel' and '1' or '')..v, scale = 0.35, shadow = true, colour = G.C.WHITE}}}}
+			ability_text[#ability_text + 1] = {n=G.UIT.R, config={align = "cm"}, nodes=SMODS.localize_box(v, {default_col = target.text_colour or G.C.WHITE, shadow = true, vars = target.vars or {}, scale = target.scale})}
 		end
-	 end
+	end
 	 local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.4)
 	 blind_text[#blind_text + 1] =
 		{n=G.UIT.R, config={align = "cm", colour = G.C.CLEAR}, nodes={

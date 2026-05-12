@@ -178,23 +178,23 @@ function UnBlind_create_UIBox_blind_popup(blind, vars, blind_col) --definition f
 	local _dollars = blind.dollars
 
 	-- Build target table (new SMODS pattern)
-	local target = {type = 'raw_descriptions', key = blind.key, set = 'Blind', vars = UnBlind_get_blind_vars(blind)}
+	local ui_target = {type = 'raw_descriptions', key = blind.key, set = 'Blind', vars = UnBlind_get_blind_vars(blind)}
 	if blind.collection_loc_vars and type(blind.collection_loc_vars) == 'function' then
 		local res = blind:collection_loc_vars() or {}
-		target.vars = res.vars or target.vars
-		target.key = res.key or target.key
-		target.set = res.set or target.set
-		target.scale = res.scale
-		target.text_colour = res.text_colour
+		ui_target.vars = res.vars or ui_target.vars
+		ui_target.key = res.key or ui_target.key
+		ui_target.set = res.set or ui_target.set
+		ui_target.scale = res.scale
+		ui_target.text_colour = res.text_colour
 	end
-	local set_tbl = G.localization.descriptions[target.set]
-	local loc_target = set_tbl and set_tbl[target.key] and set_tbl[target.key].text_parsed
+	local set_tbl = G.localization.descriptions[ui_target.set]
+	local loc_target = set_tbl and set_tbl[ui_target.key] and set_tbl[ui_target.key].text_parsed
 	local loc_name = localize{type = 'name_text', key = blind.key, set = 'Blind'}
 
 	local ability_text = {}
 	if loc_target then
 		for k, v in ipairs(loc_target) do
-			ability_text[#ability_text + 1] = {n=G.UIT.R, config={align = "cm"}, nodes=SMODS.localize_box(v, {default_col = target.text_colour or G.C.WHITE, shadow = true, vars = target.vars or {}, scale = target.scale})}
+			ability_text[#ability_text + 1] = {n=G.UIT.R, config={align = "cm"}, nodes=SMODS.localize_box(v, {default_col = ui_target.text_colour or G.C.WHITE, shadow = true, vars = ui_target.vars or {}, scale = ui_target.scale})}
 		end
 	end
 	 local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.4)

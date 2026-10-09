@@ -56,12 +56,3 @@ position = "append"
 sources = [
     "UI_Def append.lua",
 ]
-
-
-[[patches]]     ######### Test and Debugging tools
-[patches.copy]
-target = "functions/UI_definitions.lua"
-position = "append"
-sources = [
-    "Debugging tools.lua",
-]

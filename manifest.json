@@ -1,17 +1,11 @@
 {
-	"id": "unBlindShopGUI",
-	"name": "unBlind - shop GUI",
-	"author": ["Soap (MeraGenio)"],
-	"description": "Displays defeated and upcoming blinds while in the Shop.",
-	"prefix": "unBlind",
-	"main_file": "unBlindShopGUI.lua",
-	"priority": 3,
-	"badge_colour": "FF230A",
-	"display_name": "uB",
-	"version": "1.0.0",
-	"dependencies": [
-		"Steamodded (>=1.*~)"
-	],
-	"conflicts": [
-	]
+  "name": "UnBlind",
+  "version_number": "1.3.0",
+  "number": 0,
+  "boolean": true,
+  "website_url": "https://github.com/MeraGenio/UnBlind",
+  "description": "Displays defeated and upcoming blinds while in the Shop.",
+  "dependencies": [
+      "Steamodded-Steamodded-26.1002.0" 
+  ]
 }

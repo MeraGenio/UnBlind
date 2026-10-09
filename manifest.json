@@ -6,6 +6,6 @@
   "website_url": "https://github.com/MeraGenio/UnBlind",
   "description": "Displays defeated and upcoming blinds while in the Shop.",
   "dependencies": [
-      "Steamodded-Steamodded-26.1002.0" 
+      "Steamodded-Steamodded-1.1503.0" 
   ]
 }

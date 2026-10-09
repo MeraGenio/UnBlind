@@ -48,7 +48,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	G.GAME.orbital_choices[G.GAME.round_resets.ante][type] = pseudorandom_element(_poker_hands, pseudoseed('orbital'))
 	end
 
-	if type == 'Small' or type == 'Big' then
+	if type == 'Small' or type == 'Big' then -- ty liafonx
 		extras = UnBlind_create_UIBox_blind_tag(type)
 	else
 		extras = {n=G.UIT.R, config={id = 'tag_container', align = "cm"}, nodes={
@@ -67,7 +67,7 @@ function UnBlind_create_UIBox_blind(type) -- Main definition for the whole of th
 	local _reward = true
 
 	if G.GAME.modifiers.no_blind_reward and G.GAME.modifiers.no_blind_reward[type] then _reward = nil end
-	if blind_state == 'Select' then
+	if blind_state == 'Select' then -- ty liafonx
 		blind_state = 'Current'
 	end
 	local run_info_colour = run_info and (blind_state == 'Defeated' and G.C.GREY or blind_state == 'Skipped' and mix_colours(G.C.BLUE, G.C.GREY, 0.5) or blind_state == 'Upcoming' and G.C.ORANGE or G.C.GOLD)
